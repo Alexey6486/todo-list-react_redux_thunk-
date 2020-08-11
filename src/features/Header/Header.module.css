@@ -1,0 +1,28 @@
+.header{
+    width: 100%;
+    background-color: #444444;
+    position: relative;
+}
+.headerContent{
+    min-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.headerContent__title{
+    color: #ffffff;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+.headerContent__login{
+    color: #ffffff;
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.loadingBar{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}

@@ -1,0 +1,71 @@
+.taskLi{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 26px;
+}
+.taskWrap{
+    display: flex;
+    align-items: center;
+}
+.taskCheckWrap{
+    position: relative;
+    margin-right: 10px;
+}
+.taskCheckWrap label{
+    position: relative;
+    width: 26px;
+    height: 26px;
+    display: block;
+    border-radius: 5px;
+    border: 1px solid #bbbbbb;
+    cursor: pointer;
+}
+.taskCheckWrap input{
+    width: 26px;
+    height: 26px;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+}
+.taskCheckWrap label:hover,
+.taskCheckWrap input:checked+label{
+    border: 1px solid #1db3fa;
+    background-color: #1db3fa;
+}
+.taskCheckWrap label:hover::after,
+.taskCheckWrap input:checked+label::after{
+    content: "";
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 2px;
+}
+.taskLi button{
+    width: 26px;
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: tomato;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all linear 150ms;
+    outline: none;
+}
+.taskLi button img{
+    filter: invert(1);
+    width: 15px;
+}
+.taskLi button:hover{
+    background-color: #f68f7e;
+}

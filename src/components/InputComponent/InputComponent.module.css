@@ -1,0 +1,60 @@
+.inputComponentWrap{
+    position: relative;
+}
+.inputComponentInnerWrap{
+    display: flex;
+    justify-content: flex-start;
+}
+.inputComponentInnerWrap button{
+    border: 1px solid #777777;
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    outline: none;
+    cursor: pointer;
+    height: 30px;
+    background-color: #777777;
+    color: #fff;
+    transition: all linear 150ms;
+}
+.inputComponentInnerWrap button:hover{
+    background-color: #989696;
+    border-color:  #989696;
+}
+.inputComponent{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 200px;
+    border-radius: 5px;
+    border: 1px solid #777777;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-right: none;
+    outline: none;
+    padding: 0 10px;
+    height: 30px;
+}
+.inputComponent.err{
+    border: 1px solid tomato;
+    border-right: none;
+}
+.errMsg{
+    position: absolute;
+    bottom: -32px;
+    color: #ffffff;
+    background-color: tomato;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 10;
+}
+.errMsg::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    background-color: tomato;
+    left: 10px;
+    top: -5px;
+}

@@ -1,0 +1,17 @@
+.addTdlBlock{
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+}
+.addTdlContent{
+    padding: 10px 0;
+}
+.tdlsBlock{
+
+}
+.tdlsWrap{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 25px 0;
+}

@@ -1,0 +1,99 @@
+.tdlWrap{
+    width: 28%;
+    padding: 10px 20px 45px;
+    max-width: 278px;
+    margin-bottom: 30px;
+    border: 1px solid #ded7d7;
+    border-radius: 5px;
+    margin-right: 3%;
+    position: relative;
+    min-height: 300px;
+}
+.tdlName{
+    margin-bottom: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.tdlName button{
+    border-radius: 5px;
+    border: none;
+    background-color: tomato;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all linear 150ms;
+    height: 30px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+.tdlName button:hover{
+    background-color: #ff927e;
+}
+.tdlName button img{
+    width: 18px;
+    filter: invert(1);
+}
+.tdlName .spanWrap{
+    width: calc(100% - 50px);
+    height: 30px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e4d9d9;
+}
+.addTaskWrap{
+    margin-bottom: 23px;
+}
+.tasksWrap{
+    margin-bottom: 20px;
+}
+.filterBtns{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+.filterBtns button{
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+    background-color: #777;
+    width: 32%;
+    color: #ffffff;
+    transition: all linear 150ms;
+    outline: none;
+    cursor: pointer;
+}
+.filterBtns button:hover{
+    background-color: #999999;
+}
+.filterBtns button.active{
+    background-color: #ffffff;
+    color: #777;
+    border: 1px solid #777;
+}
+@media all and (max-width: 992px) {
+    .tdlWrap{
+        width: 31%;
+        margin-right: 2%;
+    }
+}
+@media all and (max-width: 767px) {
+    .tdlWrap{
+        width: 48%;
+    }
+}
+@media all and (max-width: 450px) {
+    .tdlWrap{
+        width: 100%;
+    }
+}
