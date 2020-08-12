@@ -1,8 +1,8 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import {tasksReducer} from "../features/AllTdls/Tdls/Tsks/tasks-reducer";
-import {tdlsReducer} from "../features/AllTdls/Tdls/tdls-reduser";
+import {tdlsReducer} from "../features/AllTdls/Tdls/tdls-reducer";
 import thunkMiddleware from 'redux-thunk';
-import {appReducer} from "./AppReducer";
+import {appReducer} from "./appReducer";
 
 const rootReducer = combineReducers({
     tdls: tdlsReducer,

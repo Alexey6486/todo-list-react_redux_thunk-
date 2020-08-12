@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../../app/store";
-import {getTdlsThunkCreator, TdlsReduxStateType} from "./Tdls/tdls-reduser";
+import {getTdlsThunkCreator, TdlsReduxStateType} from "./Tdls/tdls-reducer";
 import {Todolist} from "./Tdls/Todolist";
 import s from './AllTdls.module.css';
 
@@ -21,6 +21,7 @@ export const AllTdls = () => {
                 title={tdl.title}
                 tdlId={tdl.id}
                 filter={tdl.filter}
+                entityStatus={tdl.entityStatus}
             />
         )
     });

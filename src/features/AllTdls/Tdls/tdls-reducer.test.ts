@@ -1,95 +1,58 @@
-import {
-    AddTdlAC,
-    ChangeTdlFilterAC,
-    FilterValuesType,
-    RemoveTdlAC,
-    tdlsReducer,
-} from "./tdls-reduser";
-import {v1} from "uuid";
+import {addTdlAC, changeTdlFilterAC, editTdlNameAC, FilterValuesType, getTdls, removeTdlAC, setEntStatAC, tdlsReducer,
+    TdlsReduxStateType, } from "./tdls-reducer";
+import {TdlsStateType} from "../../../api/tdlApi";
 
-// test('AllTdls reducer must add new todo list', () => {
-//
-//     let tdlId_01 = v1();
-//     let tdlId_02 = v1();
-//
-//     let inputValue = 'Test_tdl_name';
-//
-//     let startState: Array<TdlsStateType> = [
-//         {id: tdlId_01, title: 'test_tdl_01', filter: 'all'},
-//         {id: tdlId_02, title: 'test_tdl_02', filter: 'all'}
-//     ];
-//
-//     //const endState = tdlsReducer(startState, {type: 'ADD-TODO-LIST', inputValue: inputValue});
-//     const endState = tdlsReducer(startState, AddTdlAC(inputValue));
-//
-//     expect(endState.length).toBe(3);
-//     expect(endState[2].title).toBe(inputValue);
-//     expect(endState[2].filter).toBe('all');
-// });
-//
-// test('AllTdls reducer must remove target todo list', () => {
-//
-//     let tdlId_01 = v1();
-//     let tdlId_02 = v1();
-//
-//     let startState: Array<TdlsStateType> = [
-//         {id: tdlId_01, title: 'test_tdl_01', filter: 'all'},
-//         {id: tdlId_02, title: 'test_tdl_02', filter: 'all'}
-//     ];
-//
-//     //const endState = tdlsReducer(startState, {type: 'REMOVE-TODO-LIST', tdlId: tdlId_01});
-//     const endState = tdlsReducer(startState, RemoveTdlAC(tdlId_01));
-//
-//     expect(endState.length).toBe(1);
-//     expect(endState[0].id).toBe(tdlId_02);
-//
-// });
-//
-// test('AllTdls reducer must change filter', () => {
-//
-//     let tdlId_01 = v1();
-//     let tdlId_02 = v1();
-//
-//     let startState: Array<TdlsStateType> = [
-//         {id: tdlId_01, title: 'test_tdl_01', filter: 'all'},
-//         {id: tdlId_02, title: 'test_tdl_02', filter: 'all'}
-//     ];
-//
-//     const newFilter: FilterValuesType = 'active';
-//
-//     // const action ={
-//     //     type: 'CHANGE-TODO-LIST-FILTER' as const, //вариант согласования типа
-//     //     tdlId: tdlId_01,
-//     //     filter: newFilter
-//     // };
-//
-//     const endState = tdlsReducer(startState, ChangeTdlFilterAC(tdlId_01, newFilter));
-//
-//     expect(endState[0].filter).toBe(newFilter);
-//     expect(endState[1].filter).toBe('all');
-//
-// });
-//
-// test('AllTdls reducer must edit todo list name', () => {
-//
-//     let tdlId_01 = v1();
-//     let tdlId_02 = v1();
-//
-//     let startState: Array<TdlsStateType> = [
-//         {id: tdlId_01, title: 'test_tdl_01', filter: 'all'},
-//         {id: tdlId_02, title: 'test_tdl_02', filter: 'all'}
-//     ];
-//     const inputValue = 'test_tdl_01_changed';
-//
-//     /*
-//     const action: EditToDoListNameActionType ={ //вариант согласования типа
-//         type: 'EDIT-TODO-LIST-NAME',
-//         tdlId: tdlId_01,
-//         inputValue: inputValue
-//     };*/
-//     const endState = tdlsReducer(startState, EditTdlNameAC(tdlId_01, inputValue));
-//
-//     expect(endState[0].title).toBe(inputValue);
-//     expect(endState[1].title).toBe('test_tdl_02');
-//
-// });
+let startState: Array<TdlsReduxStateType>;
+beforeEach(() => {
+    startState = [
+        {id: '01', addedDate: 'string', title: 'string_01', order: 1, filter: 'all', entityStatus: 'idle',},
+        {id: '02', addedDate: 'string', title: 'string_02', order: 2, filter: 'all', entityStatus: 'idle',},
+        {id: '03', addedDate: 'string', title: 'string_03', order: 3, filter: 'all', entityStatus: 'idle',},
+    ]
+})
+
+test('Tdl reducer must get todo lists', () => {
+    let startState: Array<TdlsReduxStateType> = [];
+    const newState: Array<TdlsStateType> = [
+        {id: '01', addedDate: 'string', title: 'string_01', order: 1},
+        {id: '02', addedDate: 'string', title: 'string_02', order: 2},
+        {id: '03', addedDate: 'string', title: 'string_03', order: 3},
+    ]
+    const endState = tdlsReducer(startState, getTdls(newState));
+    expect(endState.length).toBe(3);
+});
+
+test('Tdl reducer must add new todo list', () => {
+    let newTdl: TdlsStateType = {id: '04', title: 'test_tdl_033', addedDate: "string", order: 4};
+    const endState = tdlsReducer(startState, addTdlAC(newTdl));
+    expect(endState.length).toBe(4);
+    expect(endState[0].title).toBe('test_tdl_033');
+    expect(endState[0].filter).toBe('all');
+    expect(endState[0].entityStatus).toBe('idle');
+});
+
+test('Tdl reducer must remove target todo list', () => {
+    const endState = tdlsReducer(startState, removeTdlAC('01'));
+    expect(endState.length).toBe(2);
+    expect(endState[0].id).toBe('02');
+});
+
+test('Tdl reducer must change filter', () => {
+    const newFilter: FilterValuesType = 'active';
+    const endState = tdlsReducer(startState, changeTdlFilterAC('01', newFilter));
+    expect(endState[0].filter).toBe(newFilter);
+    expect(endState[1].filter).toBe('all');
+});
+
+test('Tdl reducer must edit todo list name', () => {
+    const inputValue = 'test_tdl_01_changed';
+    const endState = tdlsReducer(startState, editTdlNameAC('01', inputValue));
+    expect(endState[0].title).toBe(inputValue);
+    expect(endState[1].title).toBe('string_02');
+});
+
+test('entity status', () => {
+    const endState = tdlsReducer(startState, setEntStatAC('02', 'loading'));
+    expect(endState[0].entityStatus).toBe('idle');
+    expect(endState[1].entityStatus).toBe('loading');
+})

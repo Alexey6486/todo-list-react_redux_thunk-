@@ -3,10 +3,10 @@ import {InputComponent} from "../../../components/InputComponent/InputComponent"
 import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
 import {
     changeTdlFilterThunkCreator,
-    editTdlTitleThunkCreator,
+    editTdlTitleThunkCreator, EntityStatusTypes,
     FilterValuesType,
     removeTdlThunkCreator
-} from './tdls-reduser';
+} from './tdls-reducer';
 import {
     addTaskThunkCreator,
     deleteTaskThunkCreator,
@@ -25,6 +25,7 @@ type PropsType = {
     title: string
     filter: FilterValuesType
     tdlId: string
+    entityStatus: EntityStatusTypes
 }
 
 export const Todolist = React.memo((props: PropsType) => {
@@ -32,7 +33,7 @@ export const Todolist = React.memo((props: PropsType) => {
     const dispatch = useDispatch();
     const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks);
 
-    const {tdlId, filter, title} = props;
+    const {tdlId, filter, title, entityStatus} = props;
 
     //todolists' thunks
     const editTdlNameHandler = useCallback((inputValue: string) => {
@@ -76,13 +77,13 @@ export const Todolist = React.memo((props: PropsType) => {
                 <div className={s.spanWrap}>
                     <EditableSpan title={title} editTask={editTdlNameHandler}/>
                 </div>
-                <button onClick={() => remTdl(tdlId)}>
+                <button onClick={() => remTdl(tdlId)} disabled={entityStatus === 'loading'}>
                     <img src={bin} alt="delete todo list"/>
                 </button>
             </div>
 
             <div className={s.addTaskWrap}>
-                <InputComponent addItem={addTaskHandler} btnName={'Add'} ph={'Add new task'}/>
+                <InputComponent addItem={addTaskHandler} btnName={'Add'} ph={'Add new task'} disabled={entityStatus === 'loading'}/>
             </div>
 
             <div className={s.tasksWrap}>

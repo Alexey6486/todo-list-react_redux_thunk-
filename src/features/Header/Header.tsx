@@ -1,14 +1,22 @@
 import React, {useEffect} from "react";
 import s from './Header.module.css';
-import {LinearProgress} from "@material-ui/core";
+import {LinearProgress, createMuiTheme, ThemeProvider} from "@material-ui/core";
 import {useSelector} from "react-redux";
 import {AppRootState} from "../../app/store";
-import {AppGlobalStateType} from "../../app/AppReducer";
+import {AppGlobalStateType} from "../../app/appReducer";
 
 export const Header = () => {
 
     const appState = useSelector<AppRootState, AppGlobalStateType>(state => state.app);
     const {loading} = appState;
+
+    const theme = createMuiTheme({
+        palette: {
+            secondary: {
+                main: '#999',
+            },
+        },
+    });
 
     useEffect(() => {
 
@@ -16,7 +24,9 @@ export const Header = () => {
 
     const loadingBar = loading &&
         <div className={s.loadingBar}>
-            <LinearProgress />
+            <ThemeProvider theme={theme}>
+                <LinearProgress color="secondary"/>
+            </ThemeProvider>
         </div>
     ;
 

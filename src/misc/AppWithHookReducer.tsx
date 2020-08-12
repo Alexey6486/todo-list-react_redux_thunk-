@@ -8,11 +8,11 @@ import React, {useReducer} from 'react';
 // import {makeStyles} from '@material-ui/core/styles';
 // import {
 //     tdlsReducer,
-//     RemoveTdlAC,
-//     AddTdlAC,
-//     EditTdlNameAC,
+//     removeTdlAC,
+//     addTdlAC,
+//     editTdlNameAC,
 //     FilterValuesType,
-//     ChangeTdlFilterAC
+//     changeTdlFilterAC
 // } from "./state/AllTdls-reduser";
 // import {addTaskAC, removeTaskAC, tasksReducer, changeCheckboxAC, editTaskNameAC} from "./state/tasks-reducer";
 //
@@ -78,24 +78,24 @@ import React, {useReducer} from 'react';
 //     };
 //
 //     const remTdl = (tdlId: string) => {
-//         const action = RemoveTdlAC(tdlId);
+//         const action = removeTdlAC(tdlId);
 //         dispatchToTdlsReducer(action);
 //         dispatchToTasksReducer(action);
 //     };
 //
 //     const addTdl = (inputValue: string) => {
-//         const action = AddTdlAC(inputValue);
+//         const action = addTdlAC(inputValue);
 //         dispatchToTdlsReducer(action);
 //         dispatchToTasksReducer(action);
 //     };
 //
 //     const editTdlName = (tdlId: string, inputValue: string) => {
-//         const action = EditTdlNameAC(tdlId, inputValue);
+//         const action = editTdlNameAC(tdlId, inputValue);
 //         dispatchToTdlsReducer(action);
 //     };
 //
 //     const changeFilter = (tdlId: string, filter: FilterValuesType) => {
-//         const action = ChangeTdlFilterAC(tdlId, filter);
+//         const action = changeTdlFilterAC(tdlId, filter);
 //         dispatchToTdlsReducer(action);
 //     };
 //

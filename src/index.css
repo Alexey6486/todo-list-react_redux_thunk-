@@ -49,26 +49,31 @@ code {
     padding: 0 15px;
     margin: 0 auto;
 }
+
 @media all and (min-width: 576px) {
     .container {
         max-width: 540px;
     }
 }
+
 @media all and (min-width: 768px) {
     .container {
         max-width: 720px;
     }
 }
+
 @media all and (min-width: 992px) {
     .container {
         max-width: 960px;
     }
 }
+
 @media all and (min-width: 1200px) {
     .container {
         max-width: 1200px;
     }
 }
+
 /* no arrows for input[type=number] */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -76,30 +81,43 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
 /* Firefox */
 input[type=number] {
     -moz-appearance: textfield;
 }
+
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
 }
+
 /* Track */
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #bbbbbb;
 }
+
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #ff8e00;
 }
 
-.errMsg{
+.errMsg {
     color: tomato;
 }
-ul{
+
+ul {
     list-style: none;
+}
+
+button:disabled {
+    filter: grayscale(1) contrast(0.5) brightness(1) !important;
+    background-color: #999 !important;
+    cursor: none !important;
+    pointer-events: none;
 }

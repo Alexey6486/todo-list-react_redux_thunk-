@@ -5,11 +5,12 @@ type PropsType = {
     addItem: (inputValue: string) => void
     btnName: string
     ph?: string
+    disabled: boolean
 }
 
 export const InputComponent = React.memo( (props: PropsType) => {
 
-    const {addItem, btnName} = props;
+    const {addItem, btnName, disabled} = props;
 
     let [inputValue, setInputValue] = useState("");
     let [err, setErr] = useState("");
@@ -37,8 +38,8 @@ export const InputComponent = React.memo( (props: PropsType) => {
                        value={inputValue}
                        onChange={inputOnChange}
                        onKeyPress={addTaskByEnterKey}
-                       placeholder={props.ph}/>
-                <button onClick={addTask}>{btnName}</button>
+                       placeholder={props.ph} disabled={disabled}/>
+                <button onClick={addTask} disabled={disabled}>{btnName}</button>
             </div>
             {err && <div className={s.errMsg}>Text something...</div>}
         </div>
