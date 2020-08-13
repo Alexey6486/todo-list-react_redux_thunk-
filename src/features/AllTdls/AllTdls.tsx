@@ -4,15 +4,25 @@ import {AppRootState} from "../../app/store";
 import {getTdlsThunkCreator, TdlsReduxStateType} from "./Tdls/tdls-reducer";
 import {Todolist} from "./Tdls/Todolist";
 import s from './AllTdls.module.css';
+import {CreateTdl} from "../CreateTdl/CreateTdl";
+import {ErrMsg} from "../../components/ErrMsg/ErrMsg";
+import {Redirect} from "react-router-dom";
+import {AuthStateType} from "../login/loginReducer";
 
 export const AllTdls = () => {
 
     const dispatch = useDispatch();
     const tdls = useSelector<AppRootState, Array<TdlsReduxStateType>>(state => state.tdls);
+    const authState = useSelector<AppRootState, AuthStateType>(state => state.auth);
+    const {isAuth} = authState;
 
     useEffect(() => {
         dispatch(getTdlsThunkCreator());
     }, [dispatch]);
+
+    if (!isAuth) {
+        return <Redirect to={'/login'}/>
+    }
 
     let tdlsMap = tdls.map(tdl => {
 
@@ -28,6 +38,8 @@ export const AllTdls = () => {
 
     return (
         <>
+            <CreateTdl/>
+
             <div className={s.tdlsBlock}>
                 <div className={'container'}>
                     <div className={s.tdlsWrap}>
@@ -35,6 +47,8 @@ export const AllTdls = () => {
                     </div>
                 </div>
             </div>
+
+            <ErrMsg/>
         </>
     );
 }
