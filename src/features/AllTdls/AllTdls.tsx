@@ -7,7 +7,7 @@ import s from './AllTdls.module.css';
 import {CreateTdl} from "../CreateTdl/CreateTdl";
 import {ErrMsg} from "../../components/ErrMsg/ErrMsg";
 import {Redirect} from "react-router-dom";
-import {AuthStateType} from "../login/loginReducer";
+import {authMeTC, AuthStateType} from "../login/loginReducer";
 
 export const AllTdls = () => {
 
@@ -17,6 +17,9 @@ export const AllTdls = () => {
     const {isAuth} = authState;
 
     useEffect(() => {
+        if (!isAuth) {
+            return;
+        }
         dispatch(getTdlsThunkCreator());
     }, [dispatch]);
 
@@ -28,6 +31,7 @@ export const AllTdls = () => {
 
         return (
             <Todolist
+                key={tdl.id}
                 title={tdl.title}
                 tdlId={tdl.id}
                 filter={tdl.filter}

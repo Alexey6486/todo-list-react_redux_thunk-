@@ -2,7 +2,7 @@ import {authApi, AuthMeDataResponseType, LoginPayload} from "../../api/authApi";
 import {AppRootState} from "../../app/store";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {handleNetworkError, handleServerAppError} from "../../utils/handleErrorsUtils";
-import {loadingTC} from "../../app/appReducer";
+import {errAC, initAppAC, InitAppType, loadingTC, SetErrType, SetLoadingType} from "../../app/appReducer";
 
 const AUTH_ME = 'AUTH_ME';
 const LOGIN = 'LOGIN';
@@ -19,14 +19,14 @@ export type LoginACType = {
     rememberMe: boolean
 };
 
-const authMeAC = (payload: AuthMeDataResponseType, isAuth: boolean): AuthMeACType => {
+export const authMeAC = (payload: AuthMeDataResponseType, isAuth: boolean): AuthMeACType => {
     return {type: AUTH_ME, payload, isAuth};
 };
 const loginAC = (email: string, password: string, rememberMe: boolean): LoginACType => {
     return {type: LOGIN, email, password, rememberMe,}
 }
 
-type ActionTypes = AuthMeACType | LoginACType;
+type ActionTypes = AuthMeACType | LoginACType | SetLoadingType | InitAppType | SetErrType;
 type DispatchTypes = (action: ActionTypes) => void;
 
 export type AuthStateType = {
@@ -59,14 +59,15 @@ export const authMeTC = (): ThunkType => (dispatch: ThunkDispatch<AppRootState, 
         .then((res) => {
             if (res.resultCode === 0) {
                 dispatch(authMeAC(res.data, true));
-                dispatch(loadingTC(false));
+                dispatch(errAC(null));
             } else {
                 handleServerAppError(res, dispatch);
-                dispatch(loadingTC(false));
             }
         })
         .catch((error) => {
             handleNetworkError(error, dispatch);
+        })
+        .finally(() => {
             dispatch(loadingTC(false));
         })
 };
@@ -76,8 +77,9 @@ export const loginTC = (payload: LoginPayload): ThunkType => (dispatch: ThunkDis
         .then((res) => {
             if (res.resultCode === 0) {
                 dispatch(authMeTC());
+                dispatch(errAC(null));
             } else {
-                handleServerAppError(res, dispatch);
+               handleServerAppError(res, dispatch);
             }
         })
         .catch((error) => {
@@ -93,14 +95,14 @@ export const logoutTC = (): ThunkType => (dispatch: ThunkDispatch<AppRootState, 
         .then((res) => {
             if (res.resultCode === 0) {
                 dispatch(authMeAC({ id: 0, email: '', login: '', }, false));
-                dispatch(loadingTC(false));
             } else {
                 handleServerAppError(res, dispatch);
-                dispatch(loadingTC(false));
             }
         })
         .catch((error) => {
             handleNetworkError(error, dispatch);
+        })
+        .finally(() => {
             dispatch(loadingTC(false));
         })
 }

@@ -12,10 +12,6 @@ export const Login = () => {
     const authState = useSelector<AppRootState, AuthStateType>(state => state.auth);
     const {isAuth} = authState;
 
-    useEffect(() => {
-        dispatch(authMeTC());
-    }, [isAuth]);
-
     const formik = useFormik({
         validate: (values) => {
             if (!values.email) {
@@ -47,6 +43,7 @@ export const Login = () => {
     if (isAuth) {
         return <Redirect to={'/'}/>
     }
+
     return (
         <div className={s.loginBlock}>
             <div className={'container'}>
