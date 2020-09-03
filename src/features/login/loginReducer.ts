@@ -1,41 +1,51 @@
 import {authApi, AuthMeDataResponseType, LoginPayload} from "../../api/authApi";
-import {AppRootState} from "../../app/store";
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {handleNetworkError, handleServerAppError} from "../../utils/handleErrorsUtils";
-import {errAC, initAppAC, InitAppType, loadingTC, SetErrType, SetLoadingType} from "../../app/appReducer";
+import {errAC, loadingTC} from "../../app/appReducer";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Dispatch} from "redux";
 
-const AUTH_ME = 'AUTH_ME';
-const LOGIN = 'LOGIN';
+// const AUTH_ME = 'AUTH_ME';
+// const LOGIN = 'LOGIN';
 
-export type AuthMeACType = {
-    type: typeof AUTH_ME
-    payload: AuthMeDataResponseType
-    isAuth: boolean
-};
-export type LoginACType = {
-    type: typeof LOGIN
-    email: string
-    password: string
-    rememberMe: boolean
-};
+// export type AuthMeACType = {
+//     type: typeof AUTH_ME
+//     payload: AuthMeDataResponseType
+//     isAuth: boolean
+// };
+// export type LoginACType = {
+//     type: typeof LOGIN
+//     email: string
+//     password: string
+//     rememberMe: boolean
+// };
 
-export const authMeAC = (payload: AuthMeDataResponseType, isAuth: boolean): AuthMeACType => {
-    return {type: AUTH_ME, payload, isAuth};
-};
-const loginAC = (email: string, password: string, rememberMe: boolean): LoginACType => {
-    return {type: LOGIN, email, password, rememberMe,}
-}
+// export const authMeAC = (payload: AuthMeDataResponseType, isAuth: boolean): AuthMeACType => {
+//     return {type: AUTH_ME, payload, isAuth};
+// };
+// const loginAC = (email: string, password: string, rememberMe: boolean): LoginACType => {
+//     return {type: LOGIN, email, password, rememberMe,}
+// }
 
-type ActionTypes = AuthMeACType | LoginACType | SetLoadingType | InitAppType | SetErrType;
-type DispatchTypes = (action: ActionTypes) => void;
+//type ActionTypes = AuthMeACType | LoginACType | SetLoadingType | InitAppType | SetErrType;
+//type DispatchTypes = (action: ActionTypes) => void;
+//type ThunkType = ThunkAction<void, AppRootState, {}, ActionTypes>;
+
+// export const loginReducer = (state: AuthStateType = initState, action: ActionTypes) => {
+//     switch (action.type) {
+//         case AUTH_ME:
+//             return {...state, payload: action.payload, isAuth: action.isAuth};
+//         default:
+//             return state;
+//     }
+// };
 
 export type AuthStateType = {
-    payload: AuthMeDataResponseType
+    userData: AuthMeDataResponseType
     isAuth: boolean
 };
 
-const initState: AuthStateType = {
-    payload: {
+const initState = {
+    userData: {
         id: 0,
         email: '',
         login: '',
@@ -43,23 +53,27 @@ const initState: AuthStateType = {
     isAuth: false
 };
 
-export const loginReducer = (state: AuthStateType = initState, action: ActionTypes) => {
-    switch (action.type) {
-        case AUTH_ME:
-            return {...state, payload: action.payload, isAuth: action.isAuth};
-        default:
-            return state;
-    }
-};
+const slice = createSlice({
+    name: "auth",
+    initialState: initState,
+    reducers: {
+        authMeAC(stateDraft, action: PayloadAction<{ userData: AuthMeDataResponseType, isAuth: boolean }>) {
+            stateDraft.userData = action.payload.userData;
+            stateDraft.isAuth = action.payload.isAuth;
+        }
+    },
+})
 
-type ThunkType = ThunkAction<void, AppRootState, {}, ActionTypes>;
-export const authMeTC = (): ThunkType => (dispatch: ThunkDispatch<AppRootState, {}, ActionTypes>) => {
+export const loginReducer = slice.reducer;
+export const authMeAC = slice.actions.authMeAC;
+
+export const authMeTC = () => (dispatch: Dispatch<any>) => {
     dispatch(loadingTC(true));
     authApi.authMe()
         .then((res) => {
             if (res.resultCode === 0) {
-                dispatch(authMeAC(res.data, true));
-                dispatch(errAC(null));
+                dispatch(authMeAC({userData: res.data, isAuth: true}));
+                dispatch(errAC({err: null}));
             } else {
                 handleServerAppError(res, dispatch);
             }
@@ -71,15 +85,15 @@ export const authMeTC = (): ThunkType => (dispatch: ThunkDispatch<AppRootState, 
             dispatch(loadingTC(false));
         })
 };
-export const loginTC = (payload: LoginPayload): ThunkType => (dispatch: ThunkDispatch<AppRootState, {}, ActionTypes>) => {
+export const loginTC = (payload: LoginPayload) => (dispatch: Dispatch<any>) => {
     dispatch(loadingTC(true));
     authApi.login(payload)
         .then((res) => {
             if (res.resultCode === 0) {
                 dispatch(authMeTC());
-                dispatch(errAC(null));
+                dispatch(errAC({err: null}));
             } else {
-               handleServerAppError(res, dispatch);
+                handleServerAppError(res, dispatch);
             }
         })
         .catch((error) => {
@@ -89,12 +103,12 @@ export const loginTC = (payload: LoginPayload): ThunkType => (dispatch: ThunkDis
             dispatch(loadingTC(false));
         })
 };
-export const logoutTC = (): ThunkType => (dispatch: ThunkDispatch<AppRootState, {}, ActionTypes>) => {
+export const logoutTC = () => (dispatch: Dispatch<any>) => {
     dispatch(loadingTC(true));
     authApi.logout()
         .then((res) => {
             if (res.resultCode === 0) {
-                dispatch(authMeAC({ id: 0, email: '', login: '', }, false));
+                dispatch(authMeAC({userData: {id: 0, email: '', login: '',}, isAuth: false}));
             } else {
                 handleServerAppError(res, dispatch);
             }

@@ -1,18 +1,18 @@
 import {ResponseType} from "../api/tskApi";
-import {errAC, errTC, loadingBarAC, loadingTC, SetErrType, SetLoadingType} from "../app/appReducer";
+import {errAC, loadingBarAC} from "../app/appReducer";
 import {Dispatch} from "react";
 
-export const handleServerAppError = <D>(res: ResponseType<D>, dispatch: Dispatch<SetErrType | SetLoadingType>) => {
+export const handleServerAppError = <D>(res: ResponseType<D>, dispatch: Dispatch<any>) => {
     if (res.messages.length) {
-        dispatch(errAC(res.messages[0]));
-        dispatch(loadingBarAC(false));
+        dispatch(errAC({err: res.messages[0]}));
+        dispatch(loadingBarAC({loading: false}));
     } else {
-        dispatch(errAC('some error'));
-        dispatch(loadingBarAC(false));
+        dispatch(errAC({err: 'some error'}));
+        dispatch(loadingBarAC({loading: false}));
     }
 }
 
-export const handleNetworkError = (error: string, dispatch: Dispatch<SetErrType | SetLoadingType>) => {
-    dispatch(errAC(error));
-    dispatch(loadingBarAC(false));
+export const handleNetworkError = (error: string, dispatch: Dispatch<any>) => {
+    dispatch(errAC({err: error}));
+    dispatch(loadingBarAC({loading: false}));
 }

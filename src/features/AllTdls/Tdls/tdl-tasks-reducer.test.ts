@@ -7,7 +7,7 @@ test('id in tdl and tasks states must be the same', () => {
 
     let newTdl: TdlsReduxStateType = {id: 'test_id', title: 'test_tdl_033', addedDate: "string", order: 1, filter: "all", entityStatus: 'idle'};
 
-    const action = addTdlAC(newTdl);
+    const action = addTdlAC({item: newTdl});
 
     const endTasksState = tasksReducer(startTasksState, action);
     const endTdlState = tdlsReducer(startTdlState, action);
@@ -16,6 +16,6 @@ test('id in tdl and tasks states must be the same', () => {
     const idFromTasks = keys[0];
     const idFromTodoLists = endTdlState[0].id;
 
-    expect(idFromTasks).toBe(action.item.id);
-    expect(idFromTodoLists).toBe(action.item.id);
+    expect(idFromTasks).toBe(action.payload.item.id);
+    expect(idFromTodoLists).toBe(action.payload.item.id);
 });

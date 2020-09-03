@@ -6,16 +6,17 @@ beforeEach(() => {
     startState = {
         loading: false,
         err: null,
+        initialized: false,
     }
 })
 
 test('err component', () => {
-    const endState = appReducer(startState, errAC('test err'));
+    const endState = appReducer(startState, errAC({err: 'test err'}));
     expect(endState.err).toBe('test err');
 })
 
 test('loading status', () => {
-    const endState = appReducer(startState, loadingBarAC(true));
+    const endState = appReducer(startState, loadingBarAC({loading: true}));
     expect(endState.loading).toBe(true);
 })
 
